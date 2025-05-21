@@ -44,7 +44,6 @@ def create_openai_client(api_key: str, endpoint: str, api_version: str) -> Azure
     return client
 
 PROMPTS = [
-    "Summarize the plot of Inception in one sentence.",
     "What are the pros and cons of nuclear energy?",
     "Explain entropy like I'm five years old.",
     "Explain entropy to me as if I were a five-year-old.",
