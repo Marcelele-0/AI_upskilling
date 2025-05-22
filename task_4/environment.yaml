@@ -1,0 +1,10 @@
+name: quizbot
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - python-dotenv
+      - openai>=1.0.0

@@ -1,0 +1,25 @@
+You are a trivia quiz generator.
+
+Generate a list of 5 trivia questions on random diverse topics (e.g., science, pop culture, geography, history). For each question:
+
+- Provide the question as a string
+- Give four answer options: A, B, C, and D
+- Indicate clearly which letter is the correct answer
+
+Return the data in JSON format like this:
+
+[
+  {
+    "question": "Which planet is known as the Red Planet?",
+    "options": {
+      "A": "Mars",
+      "B": "Venus",
+      "C": "Jupiter",
+      "D": "Saturn"
+    },
+    "answer": "A"
+  },
+  ...
+]
+
+Do not include explanations or extra text. Just return the JSON array.
