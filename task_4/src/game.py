@@ -52,18 +52,18 @@ def run_quiz(questions: list[dict]) -> None:
     score = 0
     
     for i, q in enumerate(questions, 1):
-        logging.debug(f"Question {i}: {q['question']}")
+        print(f"\n  🌟 {q.get('entry', 'Let\'s see what\'s next!')}")
+        print(f"\n❓ Question {i}: {q['question']}")
         for key, val in q["options"].items():
             print(f"  {key}: {val}")
         answer = input("Your answer (A/B/C/D): ").strip().upper()
         if answer == q["answer"].upper():
-            print("✅ Correct!")
+            print(f"✅ {q.get('correct_response', 'Correct!')}")
             score += 1
         else:
             correct = q["options"][q["answer"]]
-            print(f"❌ Wrong. Correct answer: {q['answer']} - {correct}")
-
-    print(f"\n🎯 Final score: {score}/{len(questions)}")
+            print(f"❌ {q.get('wrong_response', f'Sorry! It was {q["answer"]}: {correct}')}")
+    print(f"\n🏁 Game over! Your final score: {score}/{len(questions)}")
 
 
 def main():
