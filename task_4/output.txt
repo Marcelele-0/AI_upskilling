@@ -1,0 +1,54 @@
+🎮 Welcome to the Quiz Game!
+2025-05-23 13:41:46,986 - INFO - HTTP Request: POST https://279704-9251-resource.cognitiveservices.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+
+  🌟 Alright, let's kick things off with a trip to outer space!
+
+❓ Question 1: Which planet is known as the Red Planet?
+  A: Mars
+  B: Venus
+  C: Jupiter
+  D: Saturn
+Your answer (A/B/C/D): a
+✅ Nice job! You nailed it.
+
+  🌟 Here's one for all the movie buffs out there!
+
+❓ Question 2: Which 1994 film features the iconic line, 'Life is like a box of chocolates'?
+  A: The Shawshank Redemption
+  B: Forrest Gump
+  C: Pulp Fiction
+  D: Titanic
+Your answer (A/B/C/D): b
+✅ You got it! Forrest nailed that quote.
+
+  🌟 Time to test your geography skills!
+
+❓ Question 3: What is the largest desert in the world?
+  A: Sahara Desert
+  B: Antarctic Desert
+  C: Gobi Desert
+  D: Arctic Desert
+Your answer (A/B/C/D): a
+❌ Not quite! The largest desert is actually the Antarctic Desert.
+
+  🌟 History nerds, this one's for you!
+
+❓ Question 4: Who was the first President of the United States?
+  A: Abraham Lincoln
+  B: Thomas Jefferson
+  C: George Washington
+  D: John Adams
+Your answer (A/B/C/D): a
+❌ Close, but no cigar! It was George Washington.
+
+  🌟 How about a science question to keep things fresh?
+
+❓ Question 5: What is the chemical symbol for gold?
+  A: Ag
+  B: Au
+  C: Fe
+  D: Pb
+Your answer (A/B/C/D): s
+❌ Yikes! The chemical symbol for gold is actually 'Au'.
+
+🏁 Game over! Your final score: 2/5
