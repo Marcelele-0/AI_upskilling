@@ -10,6 +10,9 @@ dependencies:
   - azure-core
   - azure-identity
   - azure-search-documents
+  - requests
   - pip:
       - python-dotenv
       - openai>=1.0.0
+      - azure-core
+      - azure-search-documents
