@@ -1,0 +1,15 @@
+name: Ai_upskilling
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - nbformat
+  - PyPDF2
+  - azure-core
+  - azure-identity
+  - azure-search-documents
+  - pip:
+      - python-dotenv
+      - openai>=1.0.0

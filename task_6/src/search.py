@@ -10,7 +10,10 @@ from dotenv import load_dotenv
 
 
 # Logging configuration
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, 
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Load environment variables from .env
@@ -27,6 +30,7 @@ credential = AzureKeyCredential(api_key)
 azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 openai_api_key = os.getenv("AZURE_OPENAI_KEY")
 
+# Initialize clients
 openai_client = AzureOpenAI(
     api_version="2024-12-01-preview",
     azure_endpoint=azure_openai_endpoint,
@@ -43,13 +47,22 @@ search_client = SearchClient(
 def vector_query(query_text: str) -> list:
     """
     Run a vector search query using the provided text.
-    Returns a list of results with id, score, and content.
+    
+    Args:
+        query_text (str): The query text to search for
+        
+    Returns:
+        list: A list of results with id, score, and content
     """
     logger.info(f"Running vector query for: {query_text}")
+    
+    # Generate embedding for the query
     query_embedding = openai_client.embeddings.create(
         model="text-embedding-ai-upskilling",
         input=query_text
     ).data[0].embedding
+    
+    # Execute vector search
     vector_results = search_client.search(
         search_text=None,
         vector_queries=[{
@@ -59,6 +72,8 @@ def vector_query(query_text: str) -> list:
             "k": 3
         }]
     )
+    
+    # Format results
     vector_output = [
         {
             "id": doc.get("id"),
@@ -67,19 +82,29 @@ def vector_query(query_text: str) -> list:
         }
         for doc in vector_results
     ]
+    
     return vector_output
 
 
 def semantic_query(query_text: str) -> list:
     """
     Run a semantic search query using the provided text.
-    Returns a list of results with id, score, and content.
+    
+    Args:
+        query_text (str): The query text to search for
+        
+    Returns:
+        list: A list of results with id, score, and content
     """
     logger.info(f"Running semantic search for: {query_text}")
+    
+    # Execute semantic search
     semantic_results = search_client.search(
         search_text=query_text,
         top=3
     )
+    
+    # Format results
     semantic_output = [
         {
             "id": doc.get("id"),
@@ -88,21 +113,22 @@ def semantic_query(query_text: str) -> list:
         }
         for doc in semantic_results
     ]
+    
     return semantic_output
 
 
-def main() -> None:
+def create_notebook(vector_results: list, semantic_results: list, notebook_path: str) -> None:
     """
-    Run a vector and semantic search query, then save both results to a Jupyter notebook.
+    Create a Jupyter notebook with the search results.
+    
+    Args:
+        vector_results (list): Results from vector search
+        semantic_results (list): Results from semantic search
+        notebook_path (str): Path where to save the notebook
     """
-    query_text = "which is the best city to travel to in the world?"
-    vector_results = vector_query(query_text)
-    semantic_results = semantic_query(query_text)
-
-    notebook_path = os.path.join("notebooks", "queries.ipynb")
-    os.makedirs("notebooks", exist_ok=True)
-
     nb = new_notebook()
+    
+    # Create cells with results
     nb.cells = [
         new_code_cell(
             source="# Vector Query Result\nvector_results = ...",
@@ -125,11 +151,34 @@ def main() -> None:
             ]
         )
     ]
-
+    
+    # Save notebook
     with open(notebook_path, "w", encoding="utf-8") as f:
         nbformat.write(nb, f)
 
+
+def main() -> None:
+    """
+    Main function to run vector and semantic search queries,
+    then save both results to a Jupyter notebook.
+    """
+    # Query configuration
+    query_text = "which is the best city to travel to in the world?"
+    
+    # Execute searches
+    logger.info("Starting search queries...")
+    vector_results = vector_query(query_text)
+    semantic_results = semantic_query(query_text)
+    
+    # Setup notebook path
+    notebook_path = os.path.join("notebooks", "queries.ipynb")
+    os.makedirs("notebooks", exist_ok=True)
+    
+    # Create and save notebook
+    create_notebook(vector_results, semantic_results, notebook_path)
+    
     logger.info(f"Process completed and results saved to {notebook_path}.")
+
 
 if __name__ == "__main__":
     main()
