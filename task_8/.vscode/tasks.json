@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "func: host start",
+			"type": "shell",
+			"command": "func",
+			"args": ["host", "start"],
+			"options": {
+				"env": {
+					"PATH": "C:/Users/Marcel/.conda/envs/Ai_upskilling;C:/Users/Marcel/.conda/envs/Ai_upskilling/Scripts;${env:PATH}"
+				}
+			},
+			"problemMatcher": "$func-python-watch",
+			"isBackground": true,
+			"dependsOn": "pip install (functions)"
+		},
+		{
+			"label": "pip install (functions)",
+			"type": "shell",
+			"osx": {
+				"command": "C:/Users/Marcel/.conda/envs/Ai_upskilling/python.exe -m pip install -r requirements.txt"
+			},
+			"windows": {
+				"command": "C:/Users/Marcel/.conda/envs/Ai_upskilling/python.exe -m pip install -r requirements.txt"
+			},
+			"linux": {
+				"command": "C:/Users/Marcel/.conda/envs/Ai_upskilling/python.exe -m pip install -r requirements.txt"
+			},
+			"problemMatcher": []
+		}
+	]
+}
