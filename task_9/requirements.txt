@@ -12,3 +12,10 @@ openai>=1.0.0
 langchain-openai
 langchain
 python-dotenv
+
+
+# Optional: Streamlit Frontend Dependencies
+# Install these if you want to run the web frontend:
+# streamlit>=1.28.0
+# requests>=2.31.0  (already included above)
+# pandas>=2.0.0

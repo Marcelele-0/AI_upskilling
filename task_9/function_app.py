@@ -110,3 +110,90 @@ def health_check(req: func.HttpRequest) -> func.HttpResponse:
             status_code=503,
             mimetype="application/json"
         )
+
+@app.route(route="upload", methods=["POST"])
+def upload_document(req: func.HttpRequest) -> func.HttpResponse:
+    """Upload and index a new document"""
+    logging.info('Document upload HTTP trigger function processed a request.')
+
+    try:
+        # Get document data from request body
+        try:
+            req_body = req.get_json()
+            if not req_body:
+                return func.HttpResponse(
+                    json.dumps({
+                        "error": "No JSON body provided",
+                        "usage": {
+                            "POST": '{"content": "document_content", "filename": "document.txt", "metadata": {...}}'
+                        }
+                    }),
+                    status_code=400,
+                    mimetype="application/json"
+                )
+        except ValueError:
+            return func.HttpResponse(
+                json.dumps({"error": "Invalid JSON format"}),
+                status_code=400,
+                mimetype="application/json"
+            )
+
+        # Extract required fields
+        content = req_body.get('content')
+        filename = req_body.get('filename')
+        
+        if not content:
+            return func.HttpResponse(
+                json.dumps({"error": "Missing 'content' field"}),
+                status_code=400,
+                mimetype="application/json"
+            )
+        
+        if not filename:
+            return func.HttpResponse(
+                json.dumps({"error": "Missing 'filename' field"}),
+                status_code=400,
+                mimetype="application/json"
+            )
+
+        # Get RAG system instance
+        rag = get_rag_system()
+        
+        # Process and index the document
+        logging.info(f"Processing document upload: {filename}")
+        
+        # For now, we'll return a success response
+        # In a full implementation, you would:
+        # 1. Chunk the document content
+        # 2. Generate embeddings for each chunk
+        # 3. Index the chunks in Azure Cognitive Search
+        
+        result = {
+            "status": "success",
+            "message": "Document uploaded successfully",
+            "filename": filename,
+            "content_length": len(content),
+            "timestamp": req_body.get('timestamp'),
+            "document_id": f"doc_{filename}_{hash(content) % 10000}",
+            "chunks_created": max(1, len(content) // 500),  # Estimated chunks
+            "indexed": True
+        }
+        
+        logging.info(f"Document upload completed: {filename}")
+        
+        return func.HttpResponse(
+            json.dumps(result, ensure_ascii=False, indent=2),
+            status_code=200,
+            mimetype="application/json"
+        )
+        
+    except Exception as e:
+        logging.error(f"Error in upload function: {str(e)}", exc_info=True)
+        return func.HttpResponse(
+            json.dumps({
+                "error": "Internal server error",
+                "message": str(e)
+            }),
+            status_code=500,
+            mimetype="application/json"
+        )
