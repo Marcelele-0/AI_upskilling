@@ -1,0 +1,29 @@
+# DO NOT include azure-functions-worker in this file
+# The Python Worker is managed by Azure Functions platform
+# Manually managing azure-functions-worker may cause unexpected issues
+
+azure-functions
+
+# RAG System Dependencies
+azure-search-documents
+azure-core
+azure-identity
+openai>=1.0.0
+langchain-openai
+langchain
+python-dotenv
+
+# Application Insights and Logging
+opencensus-ext-azure>=1.1.0
+opencensus-ext-logging>=0.1.1
+opencensus-ext-requests>=0.8.0
+opencensus-ext-flask>=0.8.0
+
+# Optional: Streamlit Frontend Dependencies
+# Install these if you want to run the web frontend:
+# streamlit>=1.28.0
+# requests>=2.31.0  (already included above)
+# pandas>=2.0.0
+
+
+# conda activate Ai_upskilling
